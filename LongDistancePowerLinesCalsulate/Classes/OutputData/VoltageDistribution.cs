@@ -107,15 +107,17 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// </summary>
         /// <param name="Xs">Расстояний от начала линии.</param>
         /// <param name="Ys">Значение напряжения.</param>
-        public void GetVoltageCollection_NaturalPower(out double[] Xs, out double[] Ys)
+        public (double[] Xs, double[] Ys) GetVoltageCollection_NaturalPower()
         {
-            Xs = new double[2];
-            Ys = new double[2];
+            double[] Xs = new double[2];
+            double[] Ys = new double[2];
 
             Xs[0] = 0;
             Xs[1] = _inputData.LineLength;
             Ys[0] = _inputData.NominalVoltage;
             Ys[1] = _inputData.NominalVoltage;
+
+            return (Xs, Ys);
         }
 
         #endregion

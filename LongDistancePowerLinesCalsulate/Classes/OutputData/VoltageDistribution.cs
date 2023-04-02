@@ -16,8 +16,9 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <param name="inputData">Входные данные.</param>
         public VoltageDistribution(InputData inputData)
         {
-            _inputData = inputData;
+            Validator.ArgumentNullException(inputData, nameof(inputData));
 
+            _inputData = inputData;
         }
 
         #region Котангенс

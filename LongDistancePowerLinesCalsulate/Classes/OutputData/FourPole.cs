@@ -17,6 +17,8 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <param name="inputData">Входные данные.</param>
         public FourPole(InputData inputData)
         {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
             _inputData = inputData;
             _inputDataZero = new InputData(inputData, 0);
         }

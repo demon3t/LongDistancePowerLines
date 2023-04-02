@@ -15,6 +15,8 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <param name="inputData">Входные данные.</param>
         public WaveParameters(InputData inputData)
         {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
             _inputData = inputData;
         }
 

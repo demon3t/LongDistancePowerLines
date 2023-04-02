@@ -15,6 +15,8 @@ namespace LongDistancePowerLinesCalsulate
         /// <returns>Волновые параметры.</returns>
         public static WaveParameters GetWaveParameters(InputData inputData)
         {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
             return new(inputData);
         }
 
@@ -25,6 +27,8 @@ namespace LongDistancePowerLinesCalsulate
         /// <returns>Четырёхполюсник.</returns>
         public static FourPole GetFourPole(InputData inputData)
         {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
             return new(inputData);
         }
 
@@ -35,6 +39,8 @@ namespace LongDistancePowerLinesCalsulate
         /// <returns>Поправочные коэффициенты</returns>
         public static CorrectionFactor GetCorrectionFactor(InputData inputData)
         {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
             return new(inputData);
         }
 
@@ -43,27 +49,23 @@ namespace LongDistancePowerLinesCalsulate
         /// </summary>
         /// <param name="inputData">Входные данные.</param>
         /// <returns>Данные распределения напряжения.</returns>
-        public static ((double[] Xs, double[] Ys) Natural, (double[] Xs, double[] Ys) More, (double[] Xs, double[] Ys) Less, (double[] Xs, double[] Ys) OneSided) GetVoltageDistribution(InputData inputData)
+        public static VoltageDistribution GetVoltageDistribution(InputData inputData)
         {
-            var distribution = new VoltageDistribution(inputData);
+            Validator.ArgumentNullException(inputData, nameof(inputData));
 
-            return (
-                distribution.GetVoltageCollection_NaturalPower(), distribution.GetVoltageCollection_MoreNaturalPower(),
-                distribution.GetVoltageCollection_LessNaturalPower(), distribution.GetVoltageCollection_OneSided());
+            return new(inputData);
         }
 
         /// <summary>
-        /// Получить данные напряжения на определённом расстоянии.
+        /// Получить данные реактора.
         /// </summary>
         /// <param name="inputData">Входные данные.</param>
-        /// <returns>Данные напряжения.</returns>
-        public static (double Natural, double More, double Less, double OneSided) GetVoltage(InputData inputData, double l)
+        /// <returns>Данные реактора.</returns>
+        public static Reactor GetReactor(InputData inputData)
         {
-            var distribution = new VoltageDistribution(inputData);
+            Validator.ArgumentNullException(inputData, nameof(inputData));
 
-            return (
-                distribution.GetVoltage_NaturalPower(l), distribution.GetVoltage_MoreNaturalPower(l),
-                distribution.GetVoltage_LessNaturalPower(l), distribution.GetVoltage_OneSided(l));
+            return new(inputData);
         }
     }
 }

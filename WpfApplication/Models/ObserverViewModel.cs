@@ -1,13 +1,24 @@
-﻿using System.ComponentModel;
+﻿using LongDistancePowerLinesCalsulate.Classes;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
+using WpfApplication.Infrastructure.Base;
 
-namespace LongDistancePowerLinesCalsulate.Classes.Base
+namespace WpfApplication.Models
 {
-    /// <summary>
-    /// View модель.
-    /// </summary>
-    public abstract class ViewModel : INotifyPropertyChanged
+
+    public abstract class ObserverViewModel : IUpdate, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Входные параметры.
+        /// </summary>
+        public abstract InputData InputData { get; set; }
+
+        /// <summary>
+        /// Обновление данных.
+        /// </summary>
+        public abstract void Update();
+
         /// <summary>
         /// Событие изменения свойства.ы
         /// </summary>

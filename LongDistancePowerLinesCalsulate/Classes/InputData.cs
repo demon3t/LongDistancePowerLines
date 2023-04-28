@@ -1,4 +1,5 @@
 ﻿using LongDistancePowerLinesCalsulate.Classes.Base;
+using LongDistancePowerLinesCalsulate.Classes.OutputData;
 using System.Numerics;
 
 namespace LongDistancePowerLinesCalsulate.Classes
@@ -21,7 +22,6 @@ namespace LongDistancePowerLinesCalsulate.Classes
             ActiveResistance = 0.02;
             DiameterWire = 37.5;
             DistanceBetweenPhases = 11.7;
-            DistanceBetweenSplitWires = 37.5;
             SteelSection = 500;
             AluminumSection = 336;
             DistanceBetweenSplitWires = 48;
@@ -42,7 +42,6 @@ namespace LongDistancePowerLinesCalsulate.Classes
             ActiveResistance = activeResistance;
             DiameterWire = inputData.DiameterWire;
             DistanceBetweenPhases = inputData.DistanceBetweenPhases;
-            DistanceBetweenSplitWires = inputData.DistanceBetweenSplitWires;
             SteelSection = inputData.SteelSection;
             AluminumSection = inputData.AluminumSection;
             DistanceBetweenSplitWires = inputData.DistanceBetweenSplitWires;
@@ -51,6 +50,36 @@ namespace LongDistancePowerLinesCalsulate.Classes
         }
 
         #endregion
+
+        /// <summary>
+        /// Волновые параметры.
+        /// </summary>
+        public WaveParameters WaveParameters { get { return new(this); } }
+
+        /// <summary>
+        /// Четырёхполюсник.
+        /// </summary>
+        public FourPole FourPole { get { return new(this); } }
+
+        /// <summary>
+        /// Поправочные коэффициенты.
+        /// </summary>
+        public CorrectionFactor CorrectionFactor { get { return new(this); } }
+
+        /// <summary>
+        /// Реактор.
+        /// </summary>
+        public Reactor Reactor { get { return new(this); } }
+
+        /// <summary>
+        /// Продольная компенсация.
+        /// </summary>
+        public LongitudinalCompensation LongitudinalCompensation { get { return new(this); } }
+
+        /// <summary>
+        /// Распределение напряжения.
+        /// </summary>
+        public VoltageDistribution VoltageDistribution { get { return new(this); } }
 
         #region Свойства
 
@@ -251,7 +280,7 @@ namespace LongDistancePowerLinesCalsulate.Classes
         /// Комплексное сопротивление одиночного провода [Z0_single].
         /// </summary>
         internal Complex ComplexResistanceWire_Single =>
-            new(ActiveResistance, ResistanceWire_Single);
+            new((double)ActiveResistance, ResistanceWire_Single);
 
         /// <summary>
         /// Комплексная проводимость одиночного провода [Y0_single].
@@ -309,7 +338,7 @@ namespace LongDistancePowerLinesCalsulate.Classes
         /// Радиус расщеплённого провода [R_eq].
         /// </summary>
         internal double RadiusWire =>
-            Math.Pow(DiameterWire / 20 * DistanceBetweenSplitWires * DistanceBetweenSplitWires, 1.0 / 3.0);
+            Math.Pow((double)DiameterWire / 20 * (double)DistanceBetweenSplitWires * (double)DistanceBetweenSplitWires, 1.0 / 3.0);
 
         /// <summary>
         /// Сопротивление расщеплённого провода [X0].

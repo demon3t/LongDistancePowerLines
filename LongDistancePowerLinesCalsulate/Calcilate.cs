@@ -67,5 +67,17 @@ namespace LongDistancePowerLinesCalsulate
 
             return new(inputData);
         }
+
+        /// <summary>
+        /// Получить данные поддержания напряжения.
+        /// </summary>
+        /// <param name="inputData">Входные данные.</param>
+        /// <returns>Данные поддержания напряжения.</returns>
+        public static VoltageMaintenance GetVoltageMaintenance(InputData inputData)
+        {
+            Validator.ArgumentNullException(inputData, nameof(inputData));
+
+            return new(inputData);
+        }
     }
 }

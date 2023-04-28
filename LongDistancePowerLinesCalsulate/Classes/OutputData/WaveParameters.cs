@@ -23,9 +23,9 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <summary>
         /// Волновые параметры одиночного провода.
         /// </summary>
-        public (double, double, double, double,
-            Complex, Complex, Complex, double,
-            double, double, Complex, double)
+        public (double MeanDistanceBetweenPhaseWires, double RadiusWire, double ResistanceWire, double CapacitiveConductivityWire,
+            Complex ComplexResistanceWire, Complex ComplexConductivityWire, Complex WavePropagationCoefficient, double AttenuatioCoefficient,
+            double PhaseCoefficient, double PhaseCoefficientDeg, Complex WaveResistanceLine, double NaturalPower)
             Single => (
             _inputData.MeanDistanceBetweenPhaseWires_Single,
             _inputData.RadiusWire_Single,
@@ -44,9 +44,9 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <summary>
         /// Волновые параметры расщеплённого провода.
         /// </summary>
-        public (double, double, double, double,
-            Complex, Complex, Complex, double,
-            double, double, Complex, double)
+        public (double MeanDistanceBetweenPhaseWires, double RadiusWire, double ResistanceWire, double CapacitiveConductivityWire,
+            Complex ComplexResistanceWire, Complex ComplexConductivityWire, Complex WavePropagationCoefficient, double AttenuatioCoefficient,
+            double PhaseCoefficient, double PhaseCoefficientDeg, Complex WaveResistanceLine, double NaturalPower)
             Split => (
             _inputData.MeanDistanceBetweenPhaseWires,
             _inputData.RadiusWire,

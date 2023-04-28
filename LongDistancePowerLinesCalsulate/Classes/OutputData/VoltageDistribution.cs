@@ -108,17 +108,15 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// </summary>
         /// <param name="Xs">Расстояний от начала линии.</param>
         /// <param name="Ys">Значение напряжения.</param>
-        public (double[] Xs, double[] Ys) GetVoltageCollection_NaturalPower()
+        public IEnumerable<(double Xs, double Ys)> GetVoltageCollection_NaturalPower()
         {
-            double[] Xs = new double[2];
-            double[] Ys = new double[2];
+            for (var i = 0d; i <= _inputData.LineLength + 1; i+= _inputData.LineLength)
+            {
+                yield return (i,
+                    _inputData.NominalVoltage);
+            }
 
-            Xs[0] = 0;
-            Xs[1] = _inputData.LineLength;
-            Ys[0] = _inputData.NominalVoltage;
-            Ys[1] = _inputData.NominalVoltage;
-
-            return (Xs, Ys);
+            yield break;
         }
 
         #endregion
@@ -141,23 +139,20 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <para>Xs - Расстояний от начала линии.</para>
         /// <para>Ys - Значение напряжения.</para>
         /// </returns>
-        public (double[] Xs, double[] Ys) GetVoltageCollection_MoreNaturalPower()
+        public IEnumerable<(double Xs, double Ys)> GetVoltageCollection_MoreNaturalPower()
         {
-            double[] Xs = new double[(int)_inputData.LineLength + 1];
-            double[] Ys = new double[(int)_inputData.LineLength + 1];
-
             double beta = _inputData.WavePropagationCoefficient.Magnitude * Math.Sin(_inputData.WavePropagationCoefficient.Phase);
             Complex i2 = I2_more;
             double z = _inputData.WaveResistanceLine.Magnitude;
 
-            Parallel.For(0, Xs.Length, (i) =>
+            for (var i = 0d; i <= _inputData.LineLength + 1; i++)
             {
-                Xs[i] = i;
-                Ys[i] = (Math.Cos(beta * (_inputData.LineLength - i)) * _inputData.NominalVoltage +
-                z * ImaginaryOne * Math.Sin(beta * (_inputData.LineLength - i)) * i2).Magnitude;
-            });
+                yield return (i,
+                    (Math.Cos(beta * (_inputData.LineLength - i)) * _inputData.NominalVoltage +
+                z * ImaginaryOne * Math.Sin(beta * (_inputData.LineLength - i)) * i2).Magnitude);
+            }
 
-            return (Xs, Ys);
+            yield break;
         }
 
 
@@ -181,23 +176,21 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <para>Xs - Расстояний от начала линии.</para>
         /// <para>Ys - Значение напряжения.</para>
         /// </returns>
-        public (double[] Xs, double[] Ys) GetVoltageCollection_LessNaturalPower()
+        public IEnumerable<(double Xs, double Ys)> GetVoltageCollection_LessNaturalPower()
         {
-            double[] Xs = new double[(int)_inputData.LineLength + 1];
-            double[] Ys = new double[(int)_inputData.LineLength + 1];
-
+            
             double beta = _inputData.WavePropagationCoefficient.Magnitude * Math.Sin(_inputData.WavePropagationCoefficient.Phase);
             Complex i2 = I2_less;
             double z = _inputData.WaveResistanceLine.Magnitude;
 
-            Parallel.For(0, Xs.Length, (i) =>
+            for (var i = 0d; i <= _inputData.LineLength + 1; i++)
             {
-                Xs[i] = i;
-                Ys[i] = (Math.Cos(beta * (_inputData.LineLength - i)) * _inputData.NominalVoltage +
-                z * Complex.ImaginaryOne * Math.Sin(beta * (_inputData.LineLength - i)) * i2).Magnitude;
-            });
+                yield return (i,
+                    (Math.Cos(beta * (_inputData.LineLength - i)) * _inputData.NominalVoltage +
+                z * Complex.ImaginaryOne * Math.Sin(beta * (_inputData.LineLength - i)) * i2).Magnitude);
+            }
 
-            return (Xs, Ys);
+            yield break;
         }
 
         #endregion
@@ -227,24 +220,21 @@ namespace LongDistancePowerLinesCalsulate.Classes.OutputData
         /// <para>Xs - Расстояний от начала линии.</para>
         /// <para>Ys - Значение напряжения.</para>
         /// </returns>
-        public (double[] Xs, double[] Ys) GetVoltageCollection_OneSided()
+        public IEnumerable<(double Xs, double Ys)> GetVoltageCollection_OneSided()
         {
-            double[] Xs = new double[(int)_inputData.LineLength + 1];
-            double[] Ys = new double[(int)_inputData.LineLength + 1];
-
             var beta = _inputData.WavePropagationCoefficient.Magnitude * Math.Sin(_inputData.WavePropagationCoefficient.Phase);
             var a = (Complex)Math.Cos(beta * _inputData.LineLength);
             var b = _inputData.WaveResistanceLine.Magnitude * Math.Sin(beta * _inputData.LineLength) * ImaginaryOne;
             var i2 = I2_more;
 
-            Parallel.For(0, Xs.Length, (i) =>
+            for (var i = 0d; i <= _inputData.LineLength + 1; i++)
             {
-                Xs[i] = i;
-                Ys[i] = Math.Cos(beta * (_inputData.LineLength - i)) *
-                ((a * _inputData.NominalVoltage + b * I2_more).Magnitude / a.Magnitude);
-            });
+                yield return (i, 
+                    Math.Cos(beta * (_inputData.LineLength - i)) *
+                ((a * _inputData.NominalVoltage + b * I2_more).Magnitude / a.Magnitude));
+            }
 
-            return (Xs, Ys);
+            yield break;
         }
 
         #endregion
